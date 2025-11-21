@@ -1,0 +1,79 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumericGrid {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random rand = new Random();
+
+        int N = 0;
+        while (true) {
+            System.out.print("Enter N (size of grid): ");
+            String input = sc.nextLine();
+
+            try {
+                N = Integer.parseInt(input);
+                if (N > 0)
+                    break;
+                else
+                    System.out.println("Please enter a positive number.");
+            } catch (Exception e) {
+                System.out.println("Invalid input. Enter a valid number.");
+            }
+        }
+
+        int[][] grid = new int[N][N];
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                grid[i][j] = 2 + (rand.nextInt(10) * 2);
+            }
+        }
+
+        System.out.println("\nStep 1:");
+        printGrid(grid, -1);
+
+        int X = 0;
+        while (true) {
+            System.out.print("\nSelect a number between 2 and 20: ");
+            String input = sc.nextLine();
+
+            try {
+                X = Integer.parseInt(input);
+                if (X >= 2 && X <= 20 && X % 2 == 0)
+                    break;
+                else
+                    System.out.println("Please enter an even number between 2 and 20.");
+            } catch (Exception e) {
+                System.out.println("Invalid input. Try again.");
+            }
+        }
+
+        System.out.println("\nStep 2:");
+        int count = printGrid(grid, X);
+
+        System.out.println("\nThe number " + X + " occurred " + count + " times.");
+
+        sc.close();
+    }
+
+    public static int printGrid(int[][] grid, int highlight) {
+        int count = 0;
+
+        for (int[] row : grid) {
+            for (int value : row) {
+
+                if (value == highlight) {
+                    System.out.printf("[%d] ", value);
+                    count++;
+                } else {
+                    System.out.printf("%d ", value);
+                }
+
+            }
+            System.out.println();
+        }
+
+        return count;
+    }
+}
